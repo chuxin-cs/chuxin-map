@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/chuxin-cs/chuxin/issues"
   },
-  "homepage": "https://github.com/chuxin-cs/chuxin#readme"
+  "homepage": "https://github.com/chuxin-cs/chuxin#readme",
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  }
 }
