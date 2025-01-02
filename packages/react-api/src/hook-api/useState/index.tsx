@@ -38,9 +38,22 @@ function Base() {
     )
 }
 
+
+interface ItProps {
+    nickName: string;
+    web: Array<string>;
+    Java: Array<string>;
+}
+
+interface UseStatePageProps {
+    name: string;
+    age: number;
+    it?: ItProps
+}
+
 // 2、useState 设计带来的心智问题
 function Mind() {
-    const [state, setState] = useState({name: "初心", age: 28});
+    const [state, setState] = useState<UseStatePageProps>({name: "初心", age: 28});
 
     // 修改 name
     const updateStateName = () => {
@@ -96,7 +109,7 @@ function Mind() {
             // return {...data};
 
             // 第三种：通过这种方式
-            data.it.web.push("Nest")
+            data.it?.web.push("Nest")
             return {...data};
 
             // 一般项目中的数据层级比较深
