@@ -20,5 +20,9 @@
   "devDependencies": {
     "typescript": "^5.5.3",
     "unbuild": "^2.0.0"
+  },
+  "dependencies": {
+    "immer": "^10.1.1",
+    "use-immer": "^0.11.0"
   }
 }

@@ -1,9 +1,12 @@
 import {useState} from "react";
+import {produce} from 'immer';
 
 /**
  * 由于是学习react阶段 useState api 代码都在当前文件中，不做文件拆分，影响
  * 1、Base: useState 基础用法
  * 2、Mind: useState 设计带来的心智问题
+ * 3、MindImmer: useState 心智问题解决方案 immer
+ *
  * */
 export function UseStatePage() {
     return (
@@ -13,6 +16,8 @@ export function UseStatePage() {
             <Base/>
             {/*  useState 设计带来的心智问题  */}
             <Mind/>
+            {/*  useState 心智问题解决方案 immer  */}
+            <MindImmer/>
         </div>
     )
 }
@@ -127,5 +132,37 @@ function Mind() {
     )
 }
 
-
+// 3、useState 心智问题解决方案 immer => useImmer
+function MindImmer() {
+    const [state, setState] = useState<UseStatePageProps>({name: "初心", age: 28});
+    const updateStateName = () => {
+        setState(produce((data) => {
+            data.name = 'chuxin'
+        }))
+    }
+    const addStateToIt = () => {
+        setState(produce((data) => {
+            data.it = {
+                nickName: "云层上的光",
+                web: ['Vue', 'React', 'JavaScript', 'TypeScript'],
+                Java: ['Spring', 'Spring Boot', 'Spring Cloud']
+            }
+        }))
+    }
+    const updateStateIt = () => {
+        // 切记：这个是累加操作
+        setState(produce((data) => {
+            data.it?.web.push("Nest")
+            data.it?.Java.splice(0, 1)
+        }))
+    }
+    return (
+        <div>
+            <div>userInfo: {JSON.stringify(state)}</div>
+            <button onClick={() => updateStateName()}>immer方式：修改name</button>
+            <button onClick={() => addStateToIt()}>immer方式：添加 it 对象属性</button>
+            <button onClick={() => updateStateIt()}>immer方式：修改 it 对象属性</button>
+        </div>
+    )
+}
 
