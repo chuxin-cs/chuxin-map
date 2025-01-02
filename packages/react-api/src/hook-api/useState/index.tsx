@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {produce} from 'immer';
 
 /**
@@ -6,7 +6,7 @@ import {produce} from 'immer';
  * 1、Base: useState 基础用法
  * 2、Mind: useState 设计带来的心智问题
  * 3、MindImmer: useState 心智问题解决方案 immer
- *
+ * 4、BaseAsync: useState 异步处理
  * */
 export function UseStatePage() {
     return (
@@ -18,6 +18,8 @@ export function UseStatePage() {
             <Mind/>
             {/*  useState 心智问题解决方案 immer  */}
             <MindImmer/>
+            {/*  useState 异步处理  */}
+            <BaseAsync/>
         </div>
     )
 }
@@ -166,3 +168,86 @@ function MindImmer() {
     )
 }
 
+// 4、useState 异步处理
+function BaseAsync() {
+
+    // 在函数中不允许直接这样进行网络请求 可以借助 useEffect
+    useEffect(() => {
+        // useEffect 的
+        (async () => {
+            const data = await fetchData();
+            setList(data?.data || [])
+        })()
+    }, []);
+
+    const [name, setName] = useState('')
+    const [list, setList] = useState([])
+
+    const handleClick = (index: number) => {
+        setList((data) => {
+            data.splice(index, 1)
+            return [...data]
+        })
+    }
+
+    const handleAdd = () => {
+        if (!name) return;
+        setList((data) => {
+            let id = Date.now();  // 使用时间戳作为 id
+            return [...data, {id, name}];
+        })
+        setName('');
+    }
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setName(value);
+    }
+
+    return (
+        <div>
+            <div>
+                <input value={name} onChange={(e) => handleChange(e)} type="text"/>
+                <button onClick={() => handleAdd()}>添加</button>
+                {
+                    /* 其实这些还可以提炼成 Function 只是重点是useState */
+                    list.length === 0 ? <div>暂无数据...</div> : <div>
+                        <ul>
+                            {list.map((item, index) => {
+                                return (
+                                    <li style={{'display': 'flex'}} key={item.id}>
+                                        <div>序号: {index + 1}</div>
+                                        <div>名称: {item.name || ''}</div>
+                                        <div>
+                                            <button onClick={() => handleClick(index)}>删除</button>
+                                        </div>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    )
+}
+
+// 模拟 API 请求的函数
+function fetchData() {
+    // 模拟延迟，假设从服务器获取数据
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({
+                code: 0,
+                message: null,
+                data: [
+                    {id: 1, name: 'Vue'},
+                    {id: 2, name: 'React'},
+                    {id: 3, name: 'Spring Boot'},
+                    {id: 4, name: 'Spring Cloud'},
+                    {id: 5, name: 'JavaScript'},
+                    {id: 6, name: 'TypeScript'},
+                ]
+            });
+        }, 1000); // 模拟1秒钟的延迟
+    });
+}
