@@ -20,7 +20,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    // 查询的基础路径
+    "baseUrl": ".",
+    // 路径映射,配合别名使用
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src"]
 }
