@@ -1,14 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+// 组件
+import Home from "@/pages/Home/index"
+import About from "@/pages/About/index"
+import Login from "@/pages/Login/index"
+// Router
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Menu } from 'antd';
+// UI
+import { Layout, Menu } from 'antd';
 
-// 定义不同的页面组件
-const Home = () => <div>这是主页</div>;
-const About = () => <div>这是关于页面</div>;
-const Contact = () => <div>这是联系我们页面</div>;
-
-// 自定义菜单组件
+// ===============================================1
+// 第一个版本 自定义菜单组件
 const CustomMenu = () => {
     const location = useLocation();
     // 根据当前路由设置选中的菜单项
@@ -25,15 +25,15 @@ const CustomMenu = () => {
             <Menu.Item key="about" icon={<></>}>
                 <Link to="/about">关于</Link>
             </Menu.Item>
-            <Menu.Item key="contact" icon={<></>}>
-                <Link to="/contact">联系我们</Link>
+            <Menu.Item key="login" icon={<></>}>
+                <Link to="/login">登录</Link>
             </Menu.Item>
         </Menu>
     );
 };
 
 // 主应用组件
-const App = () => {
+const App1 = () => {
     return (
         <Router>
             <div>
@@ -41,11 +41,32 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/login" element={<Login />} />
                 </Routes>
             </div>
         </Router>
     );
 };
 
- export default App;
+ export {App1};
+
+
+//=====================================================================================
+export const App = ()=>{
+    const routes = [
+        {path:"/", element: <Home />},
+        {path:"/about", element: <About />},
+        {path:"login", element: <Login />}
+    ]
+
+    return <>
+        <Router>
+            <Layout>
+                <Menu mode="horizontal" items={routes.map(r => ({ label: r.path, key: r.path }))} />
+                <Routes>
+                    {routes.map(route=>(<Route key={route.path} element={route.element} path={route.path} />))}
+                </Routes>
+            </Layout>
+        </Router>
+    </>
+}
