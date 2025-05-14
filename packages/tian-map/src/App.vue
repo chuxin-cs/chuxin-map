@@ -1,30 +1,33 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { onMounted } from "vue"
+import { batchCreateMarker } from "./marker/batch.ts"
+import { optimizedCreateMarker } from "./marker/canvas.ts"
+import { webglCreateMarker } from "./marker/webgl.ts"
+
+onMounted(() => {
+  // marker ==========================
+  let num = 3;
+  // 队列渲染方案
+  if (num === 1) {
+    return batchCreateMarker();
+  }
+  // canvas 方案
+  if (num === 2) {
+    return optimizedCreateMarker();
+  }
+  // webgl 
+  if(num === 3){
+    return webglCreateMarker();
+  }
+})
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-</template>
+  <div class="map-container">
+    <div style="height: 10vh;">
+      <a href="http://lbs.tianditu.gov.cn/api/js4.0/guide.html">天地图</a>
+    </div>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+    <div class="map" id="mapDiv"></div>
+  </div>
+</template>
