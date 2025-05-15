@@ -7,10 +7,12 @@ git clone https://github.com/chuxin-cs/chuxin-map.git
 ```
 
 ## ✨ 项目列表
-### 1. React
-- [gaode-map](https://github.com/chuxin-cs/chuxin-map/tree/master/gaode-map) 用于学习 高德地图 的demo
-- [tian-map](https://github.com/chuxin-cs/chuxin-map/tree/master/tian-map) 用于学习 天地图的 demo
-
+### 1. 高德地图
+### 2. 腾讯地图
+### 3. 百度地图
+### 4. 天地图
+### 5. openlayers
+### 6. leaflet
 
 ## Git 贡献提交规范
 
