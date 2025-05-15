@@ -1,4 +1,4 @@
-# web-demo
+# chuxin-map
 > 🍉🍉🍉记录地图demo：高德地图、腾讯地图、百度地图、天地图等等~
 
 ## ⌨️ Development
