@@ -11,8 +11,9 @@ git clone https://github.com/chuxin-cs/chuxin-map.git
 ### 2. 腾讯地图
 ### 3. 百度地图
 ### 4. 天地图
+- [vue-marker](https://github.com/chuxin-cs/chuxin-map/tree/master/tianditu/vue-marker) 用于实现 Marker 绘制
 ### 5. openlayers
-### 6. leaflet
+- [vue-ol-webgl](https://github.com/chuxin-cs/chuxin-map/tree/master/openlayers/vue-ol-webgl) 用于学习 openlayers 3.x 版本的 webgl 渲染
 
 ## Git 贡献提交规范
 
